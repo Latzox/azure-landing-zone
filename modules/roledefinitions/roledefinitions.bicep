@@ -3,11 +3,11 @@ targetScope = 'managementGroup'
 metadata name = 'Azure Landing Zone - Custom Role Definitions'
 metadata description = 'Custom role definitions for Azure Landing Zone'
 
-// Custom Role Definition: Application Owner
+@description('Custom role definition for subscription owner')
 resource applicationOwnerRole 'Microsoft.Authorization/roleDefinitions@2022-04-01' = {
   name: guid(tenant().tenantId, 'ApplicationOwner')
   properties: {
-    roleName: 'Application Owner'
+    roleName: 'ALZ Application Owner'
     description: 'Full access to manage application resources'
     type: 'CustomRole'
     assignableScopes: [
@@ -29,11 +29,11 @@ resource applicationOwnerRole 'Microsoft.Authorization/roleDefinitions@2022-04-0
   }
 }
 
-// Custom Role Definition: Subscription Owner
+@description('Custom role definition for subscription owner')
 resource subscriptionOwnerRole 'Microsoft.Authorization/roleDefinitions@2022-04-01' = {
   name: guid(tenant().tenantId, 'SubscriptionOwner')
   properties: {
-    roleName: 'Subscription Owner'
+    roleName: 'ALZ Subscription Owner'
     description: 'Full access to manage subscription resources'
     type: 'CustomRole'
     assignableScopes: [
@@ -53,11 +53,11 @@ resource subscriptionOwnerRole 'Microsoft.Authorization/roleDefinitions@2022-04-
   }
 }
 
-// Custom Role Definition: Security Operations
+@description('Custom role definition for security operations')
 resource securityOperationsRole 'Microsoft.Authorization/roleDefinitions@2022-04-01' = {
   name: guid(tenant().tenantId, 'SecurityOperations')
   properties: {
-    roleName: 'Security Operations'
+    roleName: 'ALZ Security Operations'
     description: 'Access to monitor and manage security operations'
     type: 'CustomRole'
     assignableScopes: [
@@ -78,11 +78,11 @@ resource securityOperationsRole 'Microsoft.Authorization/roleDefinitions@2022-04
   }
 }
 
-// Custom Role Definition: Network Management
+@description('Custom role definition for network management')
 resource networkManagementRole 'Microsoft.Authorization/roleDefinitions@2022-04-01' = {
   name: guid(tenant().tenantId, 'NetworkManagement')
   properties: {
-    roleName: 'Network Management'
+    roleName: 'ALZ Network Management'
     description: 'Full access to manage network resources'
     type: 'CustomRole'
     assignableScopes: [

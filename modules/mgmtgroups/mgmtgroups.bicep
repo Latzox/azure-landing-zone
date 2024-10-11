@@ -1,6 +1,4 @@
-// This Bicep file is used to create the management groups in the tenant root group
-
-// The scope of the deployment is the tenant
+// The scope of the deployment
 targetScope = 'tenant'
 
 @secure()
@@ -11,6 +9,7 @@ resource tenantRootGroup 'Microsoft.Management/managementGroups@2021-04-01' exis
   name: tenantRootGroupId
 }
 
+@description('Management group for Azure Landing Zones')
 resource azureLandingZones 'Microsoft.Management/managementGroups@2023-04-01' = {
   name: 'mg-alz'
   properties: {
@@ -21,6 +20,7 @@ resource azureLandingZones 'Microsoft.Management/managementGroups@2023-04-01' = 
   }
 }
 
+@description('Management group for Landing Zones')
 resource landingZones 'Microsoft.Management/managementGroups@2023-04-01' = {
   name: 'mg-landingzones'
   properties: {
@@ -31,6 +31,7 @@ resource landingZones 'Microsoft.Management/managementGroups@2023-04-01' = {
   }
 }
 
+@description('Management group for Platform')
 resource platform 'Microsoft.Management/managementGroups@2023-04-01' = {
   name: 'mg-platform'
   properties: {
@@ -41,6 +42,7 @@ resource platform 'Microsoft.Management/managementGroups@2023-04-01' = {
   }
 }
 
+@description('Management group for Connectivity')
 resource connectivity 'Microsoft.Management/managementGroups@2023-04-01' = {
   name: 'mg-platform-connectivity'
   properties: {
@@ -51,6 +53,7 @@ resource connectivity 'Microsoft.Management/managementGroups@2023-04-01' = {
   }
 }
 
+@description('Management group for Identity')
 resource identity 'Microsoft.Management/managementGroups@2023-04-01' = {
   name: 'mg-platform-identity'
   properties: {
@@ -61,6 +64,7 @@ resource identity 'Microsoft.Management/managementGroups@2023-04-01' = {
   }
 }
 
+@description('Management group for Management')
 resource management 'Microsoft.Management/managementGroups@2023-04-01' = {
   name: 'mg-platform-management'
   properties: {
@@ -71,7 +75,8 @@ resource management 'Microsoft.Management/managementGroups@2023-04-01' = {
   }
 }
 
-resource sandbox 'Microsoft.Management/managementGroups@2021-04-01' = {
+@description('Management group for Security')
+resource sandbox 'Microsoft.Management/managementGroups@2023-04-01' = {
   name: 'mg-sandbox'
   properties: {
     displayName: 'Sandbox'
