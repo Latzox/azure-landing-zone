@@ -1,9 +1,11 @@
+// The scope of the deployment
 targetScope = 'tenant'
 
+@secure()
 @description('The root management group id for the tenant')
 param tenantRootGroupId string
 
-resource tenantRootGroup 'Microsoft.Management/managementGroups@2023-04-01' existing = {
+resource tenantRootGroup 'Microsoft.Management/managementGroups@2021-04-01' existing = {
   name: tenantRootGroupId
 }
 

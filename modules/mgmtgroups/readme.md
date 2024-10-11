@@ -17,12 +17,11 @@ To use the module in your Bicep file, follow these steps:
 1. **Reference the module:**
 
    ```bicep
-   @description('Deploy management groups')
-   module mgmtgroups 'modules/mgmtgroups/mgmtgroups.bicep' = {
-     name: 'deploy-mgmtgroups'
-     params: {
-       tenantRootGroupId: tenantRootGroupId
-     }
+   module mgmtGroups 'modules/mgmtgroups/mgmtgroups.bicep' = {
+   	name: 'managementGroupsDeployment'
+   	params: {
+   		tenantRootGroupId: '<YourTenantRootGroupId>'
+   	}
    }
    ```
 2. **Deploy the Bicep module using Azure CLI:**
