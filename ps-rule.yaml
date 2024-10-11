@@ -6,6 +6,10 @@ configuration:
   AZURE_BICEP_FILE_EXPANSION: true
   AZURE_BICEP_CHECK_TOOL: true
  
+input:
+  pathIgnore:
+  - '**/*.bicep'
+
 execution:
   notProcessedWarning: false
    

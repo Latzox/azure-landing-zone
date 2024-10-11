@@ -38,11 +38,6 @@ jobs:
         for file in $(find . -name '*.bicep'); do
           echo "Validating $file"
           az bicep build --file $file
-          json_file="${file}.json"
-          if [ -f "$json_file" ]; then
-            echo "Deleting $json_file"
-            rm "$json_file"
-          fi
         done
 
     - name: Test Azure Well-Architected Framework with PSRule
