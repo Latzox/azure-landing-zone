@@ -1,8 +1,8 @@
 {
-    "name": "Azure Management Groups Module",
-    "description": "This module deploys Azure Management Groups.",
+    "name": "Role Definitions for Azure Landing Zone",
+    "description": "This module deploys the role definitions for Azure Landing Zone.",
     "author": "Latzox",
     "version": "1.0.0",
-    "tags": ["Azure", "Management Groups", "Landing Zone"],
+    "tags": ["Azure", "Landing Zone", "Role Definitions"],
     "datePublished": "2024-10-11"
 }

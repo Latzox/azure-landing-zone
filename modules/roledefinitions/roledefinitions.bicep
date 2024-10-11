@@ -3,28 +3,33 @@ targetScope = 'managementGroup'
 metadata name = 'Azure Landing Zone - Custom Role Definitions'
 metadata description = 'Custom role definitions for Azure Landing Zone'
 
-@description('Custom role definition for subscription owner')
+@description('The management group scope to which the role can be assigned.')
+param assignableScopeManagementGroupId string = 'mg-alz'
+
+@description('Custom role definition for application owner')
 resource applicationOwnerRole 'Microsoft.Authorization/roleDefinitions@2022-04-01' = {
   name: guid(tenant().tenantId, 'ApplicationOwner')
   properties: {
     roleName: 'ALZ Application Owner'
-    description: 'Full access to manage application resources'
+    description: 'Contributor role granted for application/operations team at resource group level.'
     type: 'CustomRole'
-    assignableScopes: [
-      '/providers/Microsoft.Management/managementGroups/${managementGroup().name}'
-    ]
     permissions: [
       {
         actions: [
-          'Microsoft.Resources/subscriptions/resourceGroups/read'
-          'Microsoft.Resources/subscriptions/resourceGroups/write'
-          'Microsoft.Web/sites/read'
-          'Microsoft.Web/sites/write'
-          'Microsoft.Web/serverfarms/read'
-          'Microsoft.Web/serverfarms/write'
+          '*'
         ]
-        notActions: []
+        notActions: [
+          'Microsoft.Authorization/*/write'
+          'Microsoft.Network/publicIPAddresses/write'
+          'Microsoft.Network/virtualNetworks/write'
+          'Microsoft.KeyVault/locations/deletedVaults/purge/action'
+        ]
+        dataActions: []
+        notDataActions: []
       }
+    ]
+    assignableScopes: [
+      tenantResourceId('Microsoft.Management/managementGroups', assignableScopeManagementGroupId)
     ]
   }
 }
@@ -34,21 +39,26 @@ resource subscriptionOwnerRole 'Microsoft.Authorization/roleDefinitions@2022-04-
   name: guid(tenant().tenantId, 'SubscriptionOwner')
   properties: {
     roleName: 'ALZ Subscription Owner'
-    description: 'Full access to manage subscription resources'
+    description: 'Delegated role for subscription owner derived from subscription Owner role.'
     type: 'CustomRole'
-    assignableScopes: [
-      '/providers/Microsoft.Management/managementGroups/${managementGroup().name}'
-    ]
     permissions: [
       {
         actions: [
-          'Microsoft.Resources/subscriptions/read'
-          'Microsoft.Resources/subscriptions/write'
-          'Microsoft.Authorization/roleAssignments/read'
-          'Microsoft.Authorization/roleAssignments/write'
+          '*'
         ]
-        notActions: []
+        notActions: [
+          'Microsoft.Authorization/*/write'
+          'Microsoft.Network/vpnGateways/*'
+          'Microsoft.Network/expressRouteCircuits/*'
+          'Microsoft.Network/routeTables/write'
+          'Microsoft.Network/vpnSites/*'
+        ]
+        dataActions: []
+        notDataActions: []
       }
+    ]
+    assignableScopes: [
+      tenantResourceId('Microsoft.Management/managementGroups', assignableScopeManagementGroupId)
     ]
   }
 }
@@ -58,22 +68,31 @@ resource securityOperationsRole 'Microsoft.Authorization/roleDefinitions@2022-04
   name: guid(tenant().tenantId, 'SecurityOperations')
   properties: {
     roleName: 'ALZ Security Operations'
-    description: 'Access to monitor and manage security operations'
+    description: 'Security administrator role with a horizontal view across the entire Azure estate and the Azure Key Vault purge policy.'
     type: 'CustomRole'
-    assignableScopes: [
-      '/providers/Microsoft.Management/managementGroups/${managementGroup().name}'
-    ]
     permissions: [
       {
         actions: [
-          'Microsoft.Security/*/read'
-          'Microsoft.Insights/alertRules/read'
-          'Microsoft.Insights/alertRules/write'
-          'Microsoft.OperationalInsights/workspaces/read'
-          'Microsoft.OperationalInsights/workspaces/query'
+          '*/read'
+          '*/register/action'
+          'Microsoft.KeyVault/locations/deletedVaults/purge/action'
+          'Microsoft.PolicyInsights/*'
+          'Microsoft.Authorization/policyAssignments/*'
+          'Microsoft.Authorization/policyDefinitions/*'
+          'Microsoft.Authorization/policyExemptions/*'
+          'Microsoft.Authorization/policySetDefinitions/*'
+          'Microsoft.Insights/alertRules/*'
+          'Microsoft.Resources/deployments/*'
+          'Microsoft.Security/*'
+          'Microsoft.Support/*'
         ]
         notActions: []
+        dataActions: []
+        notDataActions: []
       }
+    ]
+    assignableScopes: [
+      tenantResourceId('Microsoft.Management/managementGroups', assignableScopeManagementGroupId)
     ]
   }
 }
@@ -83,21 +102,23 @@ resource networkManagementRole 'Microsoft.Authorization/roleDefinitions@2022-04-
   name: guid(tenant().tenantId, 'NetworkManagement')
   properties: {
     roleName: 'ALZ Network Management'
-    description: 'Full access to manage network resources'
+    description: 'Platform-wide global connectivity management: Virtual networks, UDRs, NSGs, NVAs, VPN, Azure ExpressRoute, and others.'
     type: 'CustomRole'
-    assignableScopes: [
-      '/providers/Microsoft.Management/managementGroups/${managementGroup().name}'
-    ]
     permissions: [
       {
         actions: [
-          'Microsoft.Network/networkInterfaces/read'
-          'Microsoft.Network/networkInterfaces/write'
-          'Microsoft.Network/virtualNetworks/read'
-          'Microsoft.Network/virtualNetworks/write'
+          '*/read'
+          'Microsoft.Network/*'
+          'Microsoft.Resources/deployments/*'
+          'Microsoft.Support/*'
         ]
         notActions: []
+        dataActions: []
+        notDataActions: []
       }
+    ]
+    assignableScopes: [
+      tenantResourceId('Microsoft.Management/managementGroups', assignableScopeManagementGroupId)
     ]
   }
 }
