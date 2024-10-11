@@ -40,7 +40,9 @@ jobs:
           az bicep build --file $file
         done
 
-    - name: Test Azure Well-Architected Framework (PSRule)
+    - name: Test Azure Well-Architected Framework with PSRule
       uses: Microsoft/ps-rule@v2.9.0
       with:
         modules: PSRule.Rules.Azure
+        outputFormat: Markdown
+        outputPath: $env:GITHUB_STEP_SUMMARY
