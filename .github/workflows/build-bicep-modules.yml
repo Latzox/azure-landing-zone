@@ -1,0 +1,43 @@
+name: Build Bicep Modules
+
+run-name: >
+  ${{ github.workflow }}: ${{ github.event_name }} for ${{ github.ref_name }} by @${{ github.actor }}
+
+on:
+  push:
+    branches:
+      - '**'
+      - '!main'
+
+jobs:
+  Build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Azure CLI Login
+      uses: azure/login@v2
+      with:
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        enable-AzPSSession: true
+        
+    - name: Install Bicep CLI
+      run: |
+        az bicep install
+        az bicep version
+
+    - name: Validate and Test Bicep modules
+      run: |
+        for file in $(find . -name '*.bicep'); do
+          echo "Validating $file"
+          az bicep build --file $file
+        done
+
+    - name: Test Azure Well-Architected Framework (PSRule)
+      uses: Microsoft/ps-rule@v2.9.0
+      with:
+        modules: PSRule.Rules.Azure
