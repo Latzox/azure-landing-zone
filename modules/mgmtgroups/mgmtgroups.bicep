@@ -12,7 +12,7 @@ resource tenantRootGroup 'Microsoft.Management/managementGroups@2021-04-01' exis
 }
 
 resource azureLandingZones 'Microsoft.Management/managementGroups@2023-04-01' = {
-  name: 'alz'
+  name: 'mg-alz'
   properties: {
     displayName: 'Azure Landing Zones'
     details: {
@@ -22,7 +22,7 @@ resource azureLandingZones 'Microsoft.Management/managementGroups@2023-04-01' = 
 }
 
 resource landingZones 'Microsoft.Management/managementGroups@2023-04-01' = {
-  name: 'alz-landingzones'
+  name: 'mg-landingzones'
   properties: {
     displayName: 'Landing Zones'
     details: {
@@ -32,7 +32,7 @@ resource landingZones 'Microsoft.Management/managementGroups@2023-04-01' = {
 }
 
 resource platform 'Microsoft.Management/managementGroups@2023-04-01' = {
-  name: 'alz-platform'
+  name: 'mg-platform'
   properties: {
     displayName: 'Platform'
     details: {
@@ -42,7 +42,7 @@ resource platform 'Microsoft.Management/managementGroups@2023-04-01' = {
 }
 
 resource connectivity 'Microsoft.Management/managementGroups@2023-04-01' = {
-  name: 'alz-platform-connectivity'
+  name: 'mg-platform-connectivity'
   properties: {
     displayName: 'Connectivity'
     details: {
@@ -52,7 +52,7 @@ resource connectivity 'Microsoft.Management/managementGroups@2023-04-01' = {
 }
 
 resource identity 'Microsoft.Management/managementGroups@2023-04-01' = {
-  name: 'alz-platform-identity'
+  name: 'mg-platform-identity'
   properties: {
     displayName: 'Identity'
     details: {
@@ -62,7 +62,7 @@ resource identity 'Microsoft.Management/managementGroups@2023-04-01' = {
 }
 
 resource management 'Microsoft.Management/managementGroups@2023-04-01' = {
-  name: 'alz-platform-management'
+  name: 'mg-platform-management'
   properties: {
     displayName: 'Management'
     details: {
@@ -72,7 +72,7 @@ resource management 'Microsoft.Management/managementGroups@2023-04-01' = {
 }
 
 resource sandbox 'Microsoft.Management/managementGroups@2021-04-01' = {
-  name: 'alz-sandbox'
+  name: 'mg-sandbox'
   properties: {
     displayName: 'Sandbox'
     details: {

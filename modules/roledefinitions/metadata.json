@@ -1,0 +1,8 @@
+{
+    "name": "Azure Management Groups Module",
+    "description": "This module deploys Azure Management Groups.",
+    "author": "Latzox",
+    "version": "1.0.0",
+    "tags": ["Azure", "Management Groups", "Landing Zone"],
+    "datePublished": "2024-10-11"
+}
