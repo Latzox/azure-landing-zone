@@ -1,3 +1,5 @@
+[![Integration](https://github.com/Latzox/azure-landing-zone/actions/workflows/integration.yml/badge.svg)](https://github.com/Latzox/azure-landing-zone/actions/workflows/integration.yml)
+
 # Azure Landing Zone
 
 This repository contains Bicep modules to set up a preconfigured Azure landing zone.

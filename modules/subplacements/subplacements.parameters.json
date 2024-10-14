@@ -1,0 +1,18 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "subIdPlatformConnectivity": {
+      "value": "b1599fde-3d26-4a36-ace3-bc50ae012b5e"
+    },
+    "subIdPlatformIdentity": {
+      "value": "c2678acf-6c55-482b-9021-8d2021597bb9"
+    },
+    "subIdPlatformManagement": {
+      "value": "d37e765a-8e22-40c7-b9f7-fb84e9eb90a6"
+    },
+    "subIdSandbox": {
+      "value": "e48f864b-f420-4f5f-b4c0-d4d7e8401732"
+    }
+  }
+}
