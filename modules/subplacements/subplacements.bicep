@@ -15,6 +15,7 @@ param subIdPlatformManagement string
 @description('The subscription ID of the sandbox subscription')
 param subIdSandbox string
 
+@description('The definition of the subscription placements')
 var subPlacementDefinition = [
   {
     name: 'sp-platform-connectivity'
@@ -38,6 +39,7 @@ var subPlacementDefinition = [
   }
 ]
 
+@description('The subscription placements')
 resource subPlacements 'Microsoft.Management/managementGroups/subscriptions@2023-04-01' = [for placement in subPlacementDefinition: {
   name: '${placement.managementGroupId}/${placement.subscriptionId}'
 }]
