@@ -1,0 +1,8 @@
+{
+    "name": "Platform Connectivity for Azure Landing Zone",
+    "description": "This module deploys the platform connectivity for Azure Landing Zone.",
+    "author": "Latzox",
+    "version": "1.0.0",
+    "tags": ["Azure", "Landing Zone", "Platform", "Connectivity"],
+    "datePublished": "2024-10-14"
+}

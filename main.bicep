@@ -30,6 +30,9 @@ module mgmtgroups 'modules/mgmtgroups/mgmtgroups.bicep' = {
 module roledefinitions 'modules/roledefinitions/roledefinitions.bicep' = {
   name: 'deploy-roledefinitions'
   scope: managementGroup('mg-alz')
+  dependsOn: [
+    mgmtgroups
+  ]
 }
 
 @description('Deploy subscription placements')
@@ -41,4 +44,19 @@ module subPlacements 'modules/subplacements/subplacements.bicep' = {
     subIdPlatformManagement: subIdPlatformManagement
     subIdSandbox: subIdSandbox
   }
+  dependsOn: [
+    mgmtgroups
+  ]
+}
+
+@description('Deploy platform connectivity')
+module connectivity 'modules/platform-connectivity/connectivity.bicep' = {
+  name: 'deploy-connectivity'
+  params: {
+    location: 'switzerlandnorth'
+  }
+  scope: subscription(subIdPlatformConnectivity)
+  dependsOn: [
+    subPlacements
+  ]
 }
