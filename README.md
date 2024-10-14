@@ -25,7 +25,7 @@ To deploy the landing zone, follow these steps:
 1. **Clone the repository:**
 
    ```bash
-   git clone https://github.com/yourusername/azure-landing-zone.git
+   git clone https://github.com/latzox/azure-landing-zone.git
    ```
 2. **Navigate to the directory:**
 
@@ -35,7 +35,7 @@ To deploy the landing zone, follow these steps:
 3. **Deploy the Bicep modules using Azure CLI:**
 
    ```bash
-   az deployment sub create --template-file main.bicep --location <YourLocation>
+   az deployment tenant create --template-file main.bicep --location <YourLocation>
    ```
 4. **Customize the deployment parameters as needed.**
 
@@ -43,11 +43,10 @@ To deploy the landing zone, follow these steps:
 
 The repository contains the following modules:
 
-- **Networking:** Sets up virtual networks, subnets, and network security groups.
-- **Identity:** Configures Azure Active Directory integration, role-based access control (RBAC), and policies.
-- **Management:** Deploys monitoring solutions, log analytics, and automation accounts.
-- **Security:** Implements security best practices, including Azure Security Center and key vault configurations.
-- **Governance:** Establishes resource groups, naming conventions, and tagging policies.
+- **Management Groups** 
+- **Role definitions** 
+- **Subscription placements**
+- **Connectivity**
 
 ## License
 
