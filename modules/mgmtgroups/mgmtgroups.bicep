@@ -1,7 +1,7 @@
 targetScope = 'tenant'
 
 @description('The root management group id for the tenant')
-param tenantRootGroupId string
+param tenantRootGroupId string = '310c844d-a4ce-41f0-88f8-216f95f1cf44'
 
 resource tenantRootGroup 'Microsoft.Management/managementGroups@2023-04-01' existing = {
   name: tenantRootGroupId

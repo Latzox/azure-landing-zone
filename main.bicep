@@ -4,19 +4,19 @@ metadata name = 'Azure Landing Zone'
 metadata description = 'Automatic setup of an Azure Landing Zone'
 
 @description('The root management group id for the tenant')
-param tenantRootGroupId string
+param tenantRootGroupId string = '310c844d-a4ce-41f0-88f8-216f95f1cf44'
 
 @description('The subscription ID of the platform connectivity subscription')
-param subIdPlatformConnectivity string
+param subIdPlatformConnectivity string = 'b1599fde-3d26-4a36-ace3-bc50ae012b5e'
 
 @description('The subscription ID of the platform identity subscription')
-param subIdPlatformIdentity string
+param subIdPlatformIdentity string = 'c2678acf-6c55-482b-9021-8d2021597bb9'
 
 @description('The subscription ID of the platform management subscription')
-param subIdPlatformManagement string
+param subIdPlatformManagement string = 'd37e765a-8e22-40c7-b9f7-fb84e9eb90a6'
 
 @description('The subscription ID of the sandbox subscription')
-param subIdSandbox string
+param subIdSandbox string = 'e48f864b-f420-4f5f-b4c0-d4d7e8401732'
 
 @description('Deploy management groups')
 module mgmtgroups 'modules/mgmtgroups/mgmtgroups.bicep' = {
@@ -30,9 +30,6 @@ module mgmtgroups 'modules/mgmtgroups/mgmtgroups.bicep' = {
 module roledefinitions 'modules/roledefinitions/roledefinitions.bicep' = {
   name: 'deploy-roledefinitions'
   scope: managementGroup('mg-alz')
-  dependsOn: [
-    mgmtgroups
-  ]
 }
 
 @description('Deploy subscription placements')
@@ -44,9 +41,6 @@ module subPlacements 'modules/subplacements/subplacements.bicep' = {
     subIdPlatformManagement: subIdPlatformManagement
     subIdSandbox: subIdSandbox
   }
-  dependsOn: [
-    mgmtgroups
-  ]
 }
 
 @description('Deploy platform connectivity')
@@ -56,7 +50,4 @@ module connectivity 'modules/platform-connectivity/connectivity.bicep' = {
     location: 'switzerlandnorth'
   }
   scope: subscription(subIdPlatformConnectivity)
-  dependsOn: [
-    subPlacements
-  ]
 }
