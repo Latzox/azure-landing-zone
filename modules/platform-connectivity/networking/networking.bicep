@@ -9,10 +9,44 @@ param location string = resourceGroup().location
 @description('Name of the virtual network.')
 param vnetName string = 'vnet-hub-prod-${location}-001'
 
+@description('The network security group for the gateway subnet.')
+resource nsgGatewaySubnet 'Microsoft.Network/networkSecurityGroups@2024-01-01' = {
+  name: 'nsg-hub-gateway-prod-001'
+  location: location
+  tags: {
+    workload: 'azure-landing-zone'
+    environment: 'prod'
+  }
+}
+
+@description('The network security group for the Azure Firewall subnet.')
+resource nsgAzureFirewallSubnet 'Microsoft.Network/networkSecurityGroups@2024-01-01' = {
+  name: 'nsg-hub-firewall-prod-001'
+  location: location
+  tags: {
+    workload: 'azure-landing-zone'
+    environment: 'prod'
+  }
+}
+
+@description('The network security group for the Azure Bastion subnet.')
+resource nsgAzureBastionSubnet 'Microsoft.Network/networkSecurityGroups@2024-01-01' = {
+  name: 'nsg-hub-bastion-prod-001'
+  location: location
+  tags: {
+    workload: 'azure-landing-zone'
+    environment: 'prod'
+  }
+}
+
 @description('Hub virtual network.')
 resource hubVnet 'Microsoft.Network/virtualNetworks@2024-01-01' = {
   name: vnetName
   location: location
+  tags: {
+    workload: 'azure-landing-zone'
+    environment: 'prod'
+  }
   properties: {
     addressSpace: {
       addressPrefixes: [
@@ -24,25 +58,30 @@ resource hubVnet 'Microsoft.Network/virtualNetworks@2024-01-01' = {
         name: 'GatewaySubnet'
         properties: {
           addressPrefix: '10.1.1.0/24'
+          networkSecurityGroup: {
+            id: nsgGatewaySubnet.id
+          }
         }
       }
       {
         name: 'AzureFirewallSubnet'
         properties: {
           addressPrefix: '10.1.2.0/24'
+          networkSecurityGroup: {
+            id: nsgAzureFirewallSubnet.id
+          }
         }
       }
       {
         name: 'AzureBastionSubnet'
         properties: {
           addressPrefix: '10.1.3.0/24'
+          networkSecurityGroup: {
+            id: nsgAzureBastionSubnet.id
+          }
         }
       }
     ]
-  }
-  tags: {
-    workload: 'azure-landing-zone'
-    environment: 'prod'
   }
 }
 
