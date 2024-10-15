@@ -10,12 +10,20 @@ param location string = 'switzerlandnorth'
 resource rg 'Microsoft.Resources/resourceGroups@2024-07-01' = {
   name: 'rg-hubvnet-prod-001'
   location: location
+  tags: {
+    workload: 'azure-landing-zone'
+    environment: 'prod'
+  }
 }
 
 @description('Resource group for the private dns zone.')
 resource rg2 'Microsoft.Resources/resourceGroups@2024-07-01' = {
   name: 'rg-privatedns-prod-001'
   location: location
+  tags: {
+    workload: 'azure-landing-zone'
+    environment: 'prod'
+  }
 }
 
 @description('Hub virtual network.')

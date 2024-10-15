@@ -13,7 +13,10 @@ param vnetId string = '/subscriptions/e48f864b-f420-4f5f-b4c0-d4d7e8401732/provi
 resource privatednszone 'Microsoft.Network/privateDnsZones@2024-06-01' = {
   name: privatednsZoneName
   location: resourceGroup().location
-
+  tags: {
+    workload: 'azure-landing-zone'
+    environment: 'prod'
+  }
 }
 
 @description('Virtual network link to the private DNS zone.')
@@ -26,5 +29,9 @@ resource hubvnetlink 'Microsoft.Network/privateDnsZones/virtualNetworkLinks@2024
     virtualNetwork: {
       id: vnetId
     }
+  }
+  tags: {
+    workload: 'azure-landing-zone'
+    environment: 'prod'
   }
 }

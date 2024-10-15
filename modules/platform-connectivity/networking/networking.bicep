@@ -40,6 +40,10 @@ resource hubVnet 'Microsoft.Network/virtualNetworks@2024-01-01' = {
       }
     ]
   }
+  tags: {
+    workload: 'azure-landing-zone'
+    environment: 'prod'
+  }
 }
 
 output hubVnetId string = hubVnet.id
