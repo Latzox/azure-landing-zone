@@ -9,9 +9,6 @@ configuration:
 input:
   pathIgnore:
   - '**/*.json'
-
-execution:
-  notProcessedWarning: false
    
 output:
   outcome: 'Processed'
