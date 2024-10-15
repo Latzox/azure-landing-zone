@@ -44,3 +44,5 @@ jobs:
       uses: Microsoft/ps-rule@v2.9.0
       with:
         modules: PSRule.Rules.Azure
+        inputType: inputPath
+        inputPath: './main.bicep'
