@@ -18,22 +18,18 @@ param subIdSandbox string = 'e48f864b-f420-4f5f-b4c0-d4d7e8401732'
 @description('The definition of the subscription placements')
 param subPlacementDefinition array = [
   {
-    name: 'sp-platform-connectivity'
     subscriptionId: subIdPlatformConnectivity
     managementGroupId: 'mg-platform-connectivity'
   }
   {
-    name: 'sp-platform-identity'
     subscriptionId: subIdPlatformIdentity
     managementGroupId: 'mg-platform-identity'
   }
   {
-    name: 'sp-platform-management'
     subscriptionId: subIdPlatformManagement
     managementGroupId: 'mg-platform-management'
   }
   {
-    name: 'sp-sandbox'
     subscriptionId: subIdSandbox
     managementGroupId: 'mg-sandbox'
   }

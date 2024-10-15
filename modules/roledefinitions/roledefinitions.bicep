@@ -4,7 +4,7 @@ metadata name = 'Azure Landing Zone - Custom Role Definitions'
 metadata description = 'Custom role definitions for Azure Landing Zone'
 
 @description('The management group scope to which the role can be assigned.')
-param assignableScopeManagementGroupId string = 'mg-alz'
+param roleDefinitionsAssignableScope string
 
 @description('Custom role definition for application owner')
 resource applicationOwnerRole 'Microsoft.Authorization/roleDefinitions@2022-05-01-preview' = {
@@ -29,7 +29,7 @@ resource applicationOwnerRole 'Microsoft.Authorization/roleDefinitions@2022-05-0
       }
     ]
     assignableScopes: [
-      tenantResourceId('Microsoft.Management/managementGroups', assignableScopeManagementGroupId)
+      tenantResourceId('Microsoft.Management/managementGroups', roleDefinitionsAssignableScope)
     ]
   }
 }
@@ -58,7 +58,7 @@ resource subscriptionOwnerRole 'Microsoft.Authorization/roleDefinitions@2022-05-
       }
     ]
     assignableScopes: [
-      tenantResourceId('Microsoft.Management/managementGroups', assignableScopeManagementGroupId)
+      tenantResourceId('Microsoft.Management/managementGroups', roleDefinitionsAssignableScope)
     ]
   }
 }
@@ -92,7 +92,7 @@ resource securityOperationsRole 'Microsoft.Authorization/roleDefinitions@2022-05
       }
     ]
     assignableScopes: [
-      tenantResourceId('Microsoft.Management/managementGroups', assignableScopeManagementGroupId)
+      tenantResourceId('Microsoft.Management/managementGroups', roleDefinitionsAssignableScope)
     ]
   }
 }
@@ -118,7 +118,7 @@ resource networkManagementRole 'Microsoft.Authorization/roleDefinitions@2022-05-
       }
     ]
     assignableScopes: [
-      tenantResourceId('Microsoft.Management/managementGroups', assignableScopeManagementGroupId)
+      tenantResourceId('Microsoft.Management/managementGroups', roleDefinitionsAssignableScope)
     ]
   }
 }
