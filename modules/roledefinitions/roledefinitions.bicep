@@ -1,4 +1,4 @@
-targetScope = 'managementGroup'
+targetScope = 'tenant'
 
 metadata name = 'Azure Landing Zone - Custom Role Definitions'
 metadata description = 'Custom role definitions for Azure Landing Zone'
@@ -7,7 +7,7 @@ metadata description = 'Custom role definitions for Azure Landing Zone'
 param assignableScopeManagementGroupId string = 'mg-alz'
 
 @description('Custom role definition for application owner')
-resource applicationOwnerRole 'Microsoft.Authorization/roleDefinitions@2022-04-01' = {
+resource applicationOwnerRole 'Microsoft.Authorization/roleDefinitions@2022-05-01-preview' = {
   name: guid(tenant().tenantId, 'ApplicationOwner')
   properties: {
     roleName: 'ALZ Application Owner'
@@ -35,7 +35,7 @@ resource applicationOwnerRole 'Microsoft.Authorization/roleDefinitions@2022-04-0
 }
 
 @description('Custom role definition for subscription owner')
-resource subscriptionOwnerRole 'Microsoft.Authorization/roleDefinitions@2022-04-01' = {
+resource subscriptionOwnerRole 'Microsoft.Authorization/roleDefinitions@2022-05-01-preview' = {
   name: guid(tenant().tenantId, 'SubscriptionOwner')
   properties: {
     roleName: 'ALZ Subscription Owner'
@@ -64,7 +64,7 @@ resource subscriptionOwnerRole 'Microsoft.Authorization/roleDefinitions@2022-04-
 }
 
 @description('Custom role definition for security operations')
-resource securityOperationsRole 'Microsoft.Authorization/roleDefinitions@2022-04-01' = {
+resource securityOperationsRole 'Microsoft.Authorization/roleDefinitions@2022-05-01-preview' = {
   name: guid(tenant().tenantId, 'SecurityOperations')
   properties: {
     roleName: 'ALZ Security Operations'
@@ -98,7 +98,7 @@ resource securityOperationsRole 'Microsoft.Authorization/roleDefinitions@2022-04
 }
 
 @description('Custom role definition for network management')
-resource networkManagementRole 'Microsoft.Authorization/roleDefinitions@2022-04-01' = {
+resource networkManagementRole 'Microsoft.Authorization/roleDefinitions@2022-05-01-preview' = {
   name: guid(tenant().tenantId, 'NetworkManagement')
   properties: {
     roleName: 'ALZ Network Management'

@@ -29,7 +29,6 @@ module mgmtgroups 'modules/mgmtgroups/mgmtgroups.bicep' = {
 @description('Deploy role definitions')
 module roledefinitions 'modules/roledefinitions/roledefinitions.bicep' = {
   name: 'deploy-roledefinitions'
-  scope: managementGroup('mg-alz')
 }
 
 @description('Deploy subscription placements')
