@@ -42,6 +42,12 @@ module subPlacements 'modules/subplacements/subplacements.bicep' = {
   }
 }
 
+@description('Deploy platform management')
+module management 'modules/platform-management/management.bicep' = {
+  name: 'deploy-platform-management'
+  scope: subscription(subIdPlatformManagement)
+}
+
 @description('Deploy platform connectivity')
 module connectivity 'modules/platform-connectivity/connectivity.bicep' = {
   name: 'deploy-connectivity'
