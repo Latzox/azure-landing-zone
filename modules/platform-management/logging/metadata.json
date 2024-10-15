@@ -1,0 +1,8 @@
+{
+    "name": "Logging for Platform Management",
+    "description": "This module provides the logging capabilities for the platform management of the Azure Landing Zone.",
+    "author": "Latzox",
+    "version": "1.0.0",
+    "tags": ["Azure", "Landing Zone", "Platform", "Management", "Logging", "Monitoring", "Security"],
+    "datePublished": "2024-10-15"
+}
