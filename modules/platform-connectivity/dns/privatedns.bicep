@@ -1,22 +1,22 @@
 targetScope = 'resourceGroup'
 
+@description('Tags for all resources.')
+param tags object
+
 @description('Name of the private DNS zone.')
-param privatednsZoneName string = 'cloud.latzo.ch'
+param privatednsZoneName string
 
 @description('Name of the virtual network link to the private DNS zone.')
-param dnsVnetLinkName string = 'hubvnetlink'
+param dnsVnetLinkName string
 
 @description('Virtual network ID to link to the private DNS zone.')
-param vnetId string = '/subscriptions/e48f864b-f420-4f5f-b4c0-d4d7e8401732/providers/Microsoft.Network/virtualNetworks/hub-vnet'
+param vnetId string
 
 @description('The private DNS zone.')
 resource privatednszone 'Microsoft.Network/privateDnsZones@2024-06-01' = {
   name: privatednsZoneName
   location: resourceGroup().location
-  tags: {
-    workload: 'azure-landing-zone'
-    environment: 'prod'
-  }
+  tags: tags
 }
 
 @description('Virtual network link to the private DNS zone.')
@@ -30,8 +30,5 @@ resource hubvnetlink 'Microsoft.Network/privateDnsZones/virtualNetworkLinks@2024
       id: vnetId
     }
   }
-  tags: {
-    workload: 'azure-landing-zone'
-    environment: 'prod'
-  }
+  tags: tags
 }

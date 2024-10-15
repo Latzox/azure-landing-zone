@@ -3,8 +3,11 @@ targetScope = 'resourceGroup'
 metadata name = 'Azure Landing Zone - Hub Networking'
 metadata description = 'Hub virtual network and connectivity resources for Azure Landing Zone'
 
+@description('Tags for all resources.')
+param tags object
+
 @description('Location for all resources.')
-param location string = resourceGroup().location
+param location string
 
 @description('Name of the virtual network.')
 param vnetName string = 'vnet-hub-prod-${location}-001'
@@ -21,10 +24,7 @@ resource networkSecurityGroup 'Microsoft.Network/networkSecurityGroups@2024-01-0
   for nsg in nsgs: {
     name: nsg
     location: location
-    tags: {
-      workload: 'azure-landing-zone'
-      environment: 'prod'
-    }
+    tags: tags
     properties: {
       securityRules: [
         {
@@ -51,10 +51,7 @@ resource networkSecurityGroup 'Microsoft.Network/networkSecurityGroups@2024-01-0
 resource hubVnet 'Microsoft.Network/virtualNetworks@2024-01-01' = {
   name: vnetName
   location: location
-  tags: {
-    workload: 'azure-landing-zone'
-    environment: 'prod'
-  }
+  tags: tags
   properties: {
     addressSpace: {
       addressPrefixes: [

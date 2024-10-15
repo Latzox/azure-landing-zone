@@ -4,32 +4,36 @@ metadata name = 'Azure Landing Zone - Connectivity'
 metadata description = 'Hub virtual network and connectivity resources for Azure Landing Zone'
 
 @description('Location for all resources.')
-param location string = 'switzerlandnorth'
+param location string
+
+param tags object = {
+  workload: 'azure-landing-zone'
+  topic: 'platform-connectivity'
+  environment: 'prod'
+}
 
 @description('Resource group for the hub virtual network.')
 resource rg 'Microsoft.Resources/resourceGroups@2024-07-01' = {
   name: 'rg-hubvnet-prod-001'
   location: location
-  tags: {
-    workload: 'azure-landing-zone'
-    environment: 'prod'
-  }
+  tags: tags
 }
 
 @description('Resource group for the private dns zone.')
 resource rg2 'Microsoft.Resources/resourceGroups@2024-07-01' = {
   name: 'rg-privatedns-prod-001'
   location: location
-  tags: {
-    workload: 'azure-landing-zone'
-    environment: 'prod'
-  }
+  tags: tags
 }
 
 @description('Hub virtual network.')
 module hubNetworking 'networking/networking.bicep' = {
   name: 'deploy-hub-networking'
   scope: rg
+  params: {
+    tags: tags
+    location: location
+  }
 }
 
 @description('Private DNS zone.')
@@ -38,6 +42,9 @@ module privateDns 'dns/privatedns.bicep' = {
   scope: rg2
   params: {
     vnetId: hubNetworking.outputs.hubVnetId
+    tags: tags
+    privatednsZoneName: 'cloud.latzo.ch'
+    dnsVnetLinkName: 'hubvnetlink'
   }
   dependsOn: [
     hubNetworking
