@@ -6,6 +6,23 @@ metadata description = 'Automatic setup of an Azure Landing Zone'
 @description('Location for all resources.')
 param location string = 'switzerlandnorth'
 
+@description('Naming convention for all resources.')
+param namingConvention object = {
+  resourceGroupPlatformLogging: 'rg-platformlogging-prod-001'
+  resourceGroupHubVnet: 'rg-hubvnet-prod-001'
+  resourceGroupPrivateDns: 'rg-privatedns-prod-001'
+  managementLogAnalyticsWorkspace: 'law-platform-prod-001'
+  connectivityHubVNetName: 'vnet-hub-prod-${location}-001'
+  connectivityPrivatednsZoneName: 'cloud.latzo.ch'
+}
+
+@description('Network security group names for platform connectivity.')
+param nsgs array = [
+  'nsg-hub-gateway-prod-001'
+  'nsg-hub-firewall-prod-001'
+  'nsg-hub-bastion-prod-001'
+]
+
 @description('The root management group id for the tenant')
 param tenantRootGroupId string = '310c844d-a4ce-41f0-88f8-216f95f1cf44'
 
@@ -23,6 +40,19 @@ param subIdPlatformManagement string = 'd37e765a-8e22-40c7-b9f7-fb84e9eb90a6'
 
 @description('The subscription ID of the sandbox subscription')
 param subIdSandbox string = 'e48f864b-f420-4f5f-b4c0-d4d7e8401732'
+
+@description('Retention days for platform logging.')
+param platformLoggingRetentionDays int = 120
+
+@description('The SKU for the platform Log Analytics workspace.')
+@allowed([
+  'PerNode'
+  'PerGB2018'
+  'Standalone'
+  'Premium'
+  'Standard'
+])
+param platformLogAnalyticsSku string = 'PerGB2018'
 
 @description('Deploy management groups')
 module mgmtgroups 'modules/mgmtgroups/mgmtgroups.bicep' = {
@@ -62,6 +92,8 @@ module management 'modules/platform-management/management.bicep' = {
       topic: 'platform-management'
       environment: 'prod'
     }
+    platformLoggingRetentionDays: platformLoggingRetentionDays
+    platformLogAnalyticsSku: platformLogAnalyticsSku
   }
 }
 
@@ -69,7 +101,14 @@ module management 'modules/platform-management/management.bicep' = {
 module connectivity 'modules/platform-connectivity/connectivity.bicep' = {
   name: 'deploy-connectivity'
   params: {
-    location: 'switzerlandnorth'
+    location: location
+    tags: {
+      workload: 'azure-landing-zone'
+      topic: 'platform-connectivity'
+      environment: 'prod'
+    }
+    nsgs: nsgs
+    namingConvention: namingConvention
   }
   scope: subscription(subIdPlatformConnectivity)
 }

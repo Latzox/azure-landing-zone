@@ -6,21 +6,24 @@ metadata description = 'Hub virtual network and connectivity resources for Azure
 @description('Location for all resources.')
 param location string
 
-param tags object = {
-  workload: 'azure-landing-zone'
-  topic: 'platform-connectivity'
-  environment: 'prod'
-}
+@description('Naming convention for all resources.')
+param namingConvention object
+
+@description('Network security group names.')
+param nsgs array
+
+@description('Tags for all resources.')
+param tags object
 
 @description('Resource group for the hub virtual network.')
-resource rg 'Microsoft.Resources/resourceGroups@2024-07-01' = {
+resource rgHubVnet 'Microsoft.Resources/resourceGroups@2024-07-01' = {
   name: 'rg-hubvnet-prod-001'
   location: location
   tags: tags
 }
 
 @description('Resource group for the private dns zone.')
-resource rg2 'Microsoft.Resources/resourceGroups@2024-07-01' = {
+resource rgPrivateDns 'Microsoft.Resources/resourceGroups@2024-07-01' = {
   name: 'rg-privatedns-prod-001'
   location: location
   tags: tags
@@ -29,21 +32,23 @@ resource rg2 'Microsoft.Resources/resourceGroups@2024-07-01' = {
 @description('Hub virtual network.')
 module hubNetworking 'networking/networking.bicep' = {
   name: 'deploy-hub-networking'
-  scope: rg
+  scope: rgHubVnet
   params: {
     tags: tags
     location: location
+    nsgs: nsgs
+    namingConvention: namingConvention
   }
 }
 
 @description('Private DNS zone.')
 module privateDns 'dns/privatedns.bicep' = {
   name: 'deploy-privatedns'
-  scope: rg2
+  scope: rgPrivateDns
   params: {
     vnetId: hubNetworking.outputs.hubVnetId
     tags: tags
-    privatednsZoneName: 'cloud.latzo.ch'
+    namingConvention: namingConvention
     dnsVnetLinkName: 'hubvnetlink'
   }
   dependsOn: [

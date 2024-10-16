@@ -9,15 +9,11 @@ param tags object
 @description('Location for all resources.')
 param location string
 
-@description('Name of the virtual network.')
-param vnetName string = 'vnet-hub-prod-${location}-001'
+@description('Naming convention for all resources.')
+param namingConvention object
 
 @description('Network security group names.')
-var nsgs = [
-  'nsg-hub-gateway-prod-001'
-  'nsg-hub-firewall-prod-001'
-  'nsg-hub-bastion-prod-001'
-]
+param nsgs array
 
 @description('The Network security groups.')
 resource networkSecurityGroup 'Microsoft.Network/networkSecurityGroups@2024-01-01' = [
@@ -49,7 +45,7 @@ resource networkSecurityGroup 'Microsoft.Network/networkSecurityGroups@2024-01-0
 
 @description('Hub virtual network.')
 resource hubVnet 'Microsoft.Network/virtualNetworks@2024-01-01' = {
-  name: vnetName
+  name: namingConvention.connectivityHubVNetName
   location: location
   tags: tags
   properties: {

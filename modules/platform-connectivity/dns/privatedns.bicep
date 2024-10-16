@@ -1,10 +1,13 @@
 targetScope = 'resourceGroup'
 
+metadata name = 'Azure Landing Zone - Private DNS Resolution'
+metadata description = 'Private DNS configuration for Azure Landing Zone'
+
 @description('Tags for all resources.')
 param tags object
 
-@description('Name of the private DNS zone.')
-param privatednsZoneName string
+@description('Naming convention for all resources.')
+param namingConvention object
 
 @description('Name of the virtual network link to the private DNS zone.')
 param dnsVnetLinkName string
@@ -14,7 +17,7 @@ param vnetId string
 
 @description('The private DNS zone.')
 resource privatednszone 'Microsoft.Network/privateDnsZones@2024-06-01' = {
-  name: privatednsZoneName
+  name: namingConvention.connectivityPrivateDnsZoneName
   location: resourceGroup().location
   tags: tags
 }
