@@ -9,6 +9,9 @@ param location string
 @description('The tags for all platform management resources.')
 param tags object
 
+@description('Naming convention for all resources.')
+param namingConvention object
+
 @description('Retention days for platform logging.')
 param platformLoggingRetentionDays int
 
@@ -22,18 +25,21 @@ param platformLoggingRetentionDays int
 ])
 param platformLogAnalyticsSku string
 
-resource resourceGroup 'Microsoft.Resources/resourceGroups@2024-07-01' = {
-  name: 'rg-platformlogging-prod-001'
+@description('Resource group for platform logging.')
+resource rgPlatformLogging 'Microsoft.Resources/resourceGroups@2024-07-01' = {
+  name: namingConvention.resourceGroupPlatformLogging
   location: location
   tags: tags
 }
 
+@description('Deploy platform logging')
 module logging 'logging/logging.bicep' = {
   name: 'deploy-platform-logging'
-  scope: resourceGroup
+  scope: rgPlatformLogging
   params: {
     location: location
     tags: tags
+    namingConvention: namingConvention
     platformLoggingRetentionDays: platformLoggingRetentionDays
     platformLogAnalyticsSku: platformLogAnalyticsSku
   }

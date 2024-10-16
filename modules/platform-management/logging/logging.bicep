@@ -9,6 +9,9 @@ param location string
 @description('Tags for all resources.')
 param tags object
 
+@description('Naming convention for all resources.')
+param namingConvention object
+
 @description('Retention days for platform logging.')
 param platformLoggingRetentionDays int
 
@@ -22,8 +25,9 @@ param platformLoggingRetentionDays int
 ])
 param platformLogAnalyticsSku string
 
+@description('Log analytics workspace for platform management.')
 resource logAnalyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2023-09-01' = {
-  name: 'law-platform-prod-001'
+  name: namingConvention.managementLogAnalyticsWorkspace
   location: location
   tags: tags
   properties: {

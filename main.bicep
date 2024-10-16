@@ -92,6 +92,7 @@ module management 'modules/platform-management/management.bicep' = {
       topic: 'platform-management'
       environment: 'prod'
     }
+    namingConvention: namingConvention
     platformLoggingRetentionDays: platformLoggingRetentionDays
     platformLogAnalyticsSku: platformLogAnalyticsSku
   }
